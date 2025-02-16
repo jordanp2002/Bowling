@@ -10,8 +10,7 @@ public class BallController : MonoBehaviour
     [SerializeField] private Transform launchIndicator;
     private bool isBallLaunched;
     private Rigidbody ballRB;
-    void Start()
-    {
+    void Start(){
         ballRB = GetComponent<Rigidbody>();
         inputManager.OnSpacePressed.AddListener(LaunchBall);
         Cursor.lockState = CursorLockMode.Locked;
@@ -21,18 +20,15 @@ public class BallController : MonoBehaviour
 
         ResetBall();
     }
-    private void LaunchBall()
-    {
+    private void LaunchBall(){
         if (isBallLaunched) return;
         isBallLaunched = true;
         transform.parent = null;
         ballRB.isKinematic = false;
-  
         ballRB.AddForce(launchIndicator.forward * force, ForceMode.Impulse);
         launchIndicator.gameObject.SetActive(false);
     }
-    public void ResetBall()
-    {
+    public void ResetBall(){
         isBallLaunched = false;
         ballRB.isKinematic = true;
         launchIndicator.gameObject.SetActive(true);
@@ -40,5 +36,4 @@ public class BallController : MonoBehaviour
         transform.localPosition = Vector3.zero;
     }
 
- 
 }

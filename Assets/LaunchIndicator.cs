@@ -1,10 +1,8 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class LaunchIndicator : MonoBehaviour
-{
+public class LaunchIndicator : MonoBehaviour{
     [SerializeField] private CinemachineCamera freeLookCamera;
-   
     void Update()
     {
         transform.forward = freeLookCamera.transform.forward;
