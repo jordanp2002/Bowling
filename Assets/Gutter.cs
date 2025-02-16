@@ -7,15 +7,10 @@ public class Gutter : MonoBehaviour
 
         if (!triggeredBody.CompareTag("Ball")) return;
         Rigidbody ballRigidBody = triggeredBody.GetComponent<Rigidbody>();
-
-        if (ballRigidBody.isKinematic)
-        {
-            return;
-        }
         float velocityMagnitude = ballRigidBody.linearVelocity.magnitude;
-
         ballRigidBody.linearVelocity = Vector3.zero;
         ballRigidBody.angularVelocity = Vector3.zero;
+        if (ballRigidBody.isKinematic) return;
         ballRigidBody.AddForce(Vector3.forward * velocityMagnitude, ForceMode.VelocityChange);
     }
 }
