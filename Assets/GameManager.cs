@@ -4,42 +4,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private float score = 0;
-
+    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private BallController ball;
-
     [SerializeField] private GameObject pinCollection;
     [SerializeField] private Transform pinAnchor;
-
     [SerializeField] private InputManager inputManager;
-
-    [SerializeField] private TextMeshProUGUI scoreText;
     private FallTrigger[] fallTriggers;
     private GameObject pinObjects;
 
     private void Start()
     {
-        DestroyInitialPins();
         inputManager.OnResetPressed.AddListener(HandleReset);
         SetPins();
     }
-    private void DestroyInitialPins()
-    {
-        // Find all existing pins in the scene
-        FallTrigger[] existingPins = FindObjectsByType<FallTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-
-        foreach (FallTrigger pin in existingPins)
-        {
-            Destroy(pin.gameObject);
-        }
-    }
-
 
     private void HandleReset()
     {
         ball.ResetBall();
         SetPins();
     }
-
     private void SetPins()
     {
         if (pinObjects)
@@ -50,9 +33,10 @@ public class GameManager : MonoBehaviour
             }
             Destroy(pinObjects);
         }
-        pinObjects = Instantiate(pinCollection, pinAnchor.transform.position, Quaternion.identity, transform);
 
+        pinObjects = Instantiate(pinCollection, pinAnchor.transform.position, Quaternion.identity, transform);
         fallTriggers = FindObjectsByType<FallTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
         foreach (FallTrigger pin in fallTriggers)
         {
             pin.OnPinFall.AddListener(IncrementScore);
@@ -64,4 +48,5 @@ public class GameManager : MonoBehaviour
         score++;
         scoreText.text = $"Score: {score}";
     }
+
 }
